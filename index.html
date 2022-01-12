@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./dist/output.css">
+  <script src="https://use.fontawesome.com/fed7a163da.js"></script>
+  <script>
+    const { ipcRenderer } = require('electron')
+    ipcRenderer.on('show-driverWindow', (e) => {
+      showOne("driver");
+    });
+    ipcRenderer.on('show-home', (e) => {
+      showOne("home");
+    });
+
+    //os details
+    ipcRenderer.send('os-info')
+    ipcRenderer.on('os-info', (e,data) => {
+      document.getElementById("osDetail0").innerHTML=data[0];
+    });
+
+    //cpu details
+    ipcRenderer.send('cpu-info')
+    ipcRenderer.on('cpu-info', (e,data) => {
+      document.getElementById("cpuDetail0").innerHTML=data[0];
+      document.getElementById("cpuDetail1").innerHTML=data[1];
+      document.getElementById("cpuDetail2").innerHTML=data[2];
+    });
+
+    ipcRenderer.send('cpu-temp-info')
+    ipcRenderer.on('cpu-temp-info', (e,data) => {
+      document.getElementById("cpuTempDetail0").innerHTML=data[0];
+      document.getElementById("cpuTempDetail1").innerHTML=data[1];
+    });
+
+    //os details
+    ipcRenderer.send('memory')
+    ipcRenderer.on('memory', (e,data) => {
+      document.getElementById("memo0").innerHTML=data[0].toFixed(2);
+    });
+
+    //pc information
+    ipcRenderer.send('com')
+    ipcRenderer.on('com', (e,data) => {
+      document.getElementById("pcDetail0").innerHTML=data[0].toFixed(2);
+      document.getElementById("memo1").innerHTML=data[1].toFixed(2);
+      document.getElementById("osDetail1").innerHTML=data[2];
+
+    });
+
+  </script>
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div class="flex flex-row  h-screen  ">
+    <div class="bg-slate-600 text-white w-max  flex flex-col align-middle p-4  divide-y divide-solid divide-purple-400">
+      <div class="flex flex-col align-middle ">
+        <div class=" text-center"><a href=""><i class="fa fa-desktop fa-2x" aria-hidden="true"></i></a>
+
+        </div>
+        <div class="  font-mono text-center text-xl subpixel-antialiased">
+          <h1>HSW
+          </h1>
+        </div>
+      </div>
+      <div class="mt-2  ">
+        <a href="">
+          <div
+            class="text-center rounded-lg  p-4 bg-gray-400 hover:bg-purple-500 active:bg-gray- focus:outline-none focus:ring focus:ring-violet-300 m-3  shadow-lg ">
+            <button>Home</button>
+          </div>
+        </a>
+        <a href="">
+          <div
+            class="text-center  rounded-lg p-4 bg-gray-400   hover:bg-purple-500 active:bg-gray-500  focus:outline-none focus:ring focus:ring-violet-300 m-3 shadow-lg">
+            <button>Diagonistic</button>
+          </div>
+        </a>
+        <a href="">
+          <div
+            class="text-center rounded-lg p-4  bg-gray-400  hover:bg-purple-500 active:bg-gray-500 focus:outline-none focus:ring focus:ring-violet-300 m-3 shadow-lg">
+            <button>Usage Chart</button>
+          </div>
+        </a>
+        <a href="">
+          <div
+            class="text-center rounded-lg  p-4 bg-gray-400 hover:bg-purple-500 active:bg-gray- focus:outline-none focus:ring focus:ring-violet-300 m-3  shadow-lg ">
+            <button>News</button>
+          </div>
+        </a>
+        <a href="">
+          <div
+            class="text-center  rounded-lg p-4 bg-gray-400   hover:bg-purple-500 active:bg-gray-500  focus:outline-none focus:ring focus:ring-violet-300 m-3 shadow-lg">
+            <button>Upgrades</button>
+          </div>
+        </a>
+        <a href="">
+          <div
+            class="text-center rounded-lg p-4  bg-gray-400  hover:bg-purple-500 active:bg-gray-500 focus:outline-none focus:ring focus:ring-violet-300 m-3 shadow-lg">
+            <button>About</button>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+
+    <div class="flex flex-row flex-wrap justify-center w-screen bg-gray-800 text-white overflow-scroll ">
+
+
+      <div class=" w-3/12 h-2/6 p-4 m-14  flex-grow text-center rounded-lg  bg-gray-400   shadow-lg">
+        <h1>OS</h1>
+        <p class= "mt-5">OS Architecture: <span  id="osDetail0"></span></p>
+
+        <p class= "mt-5">OS Type : <span id="osDetail1"></span></p>
+      </div>
+
+      <div class=" w-3/12 h-2/6 p-4 m-14 flex-grow text-center rounded-lg  bg-gray-400  shadow-lg">
+        <h1>CPU</h1>
+        <p class= "mt-5">Manufacturer : <span id="cpuDetail0"></span></p>
+
+        <p class= "mt-5">Model : <span id="cpuDetail1"></span></p>
+
+        <p class= "mt-5">Cores : <span id="cpuDetail2"></span></p>
+
+      </div>
+
+      <div class=" w-3/12 h-2/6 p-4  m-14 flex-grow text-center rounded-lg  bg-gray-400   shadow-lg">
+        <h1>RAM</h1>
+        <p class= "mt-5">Total Memory (RAM) : <span id="memo0"></span> GB</p>
+
+        <p class= "mt-5">Free Memory (RAM) : <span id="memo1"></span> GB</p>
+
+        <p class= "mt-5">Uptime : <span id="pcDetail0"></span> mins</p>
+      </div>
+
+      <div class=" w-3/12 h-2/6 p-4  m-14 flex-grow text-center rounded-lg   bg-gray-400   shadow-lg">
+        <h1>div4
+        </h1>
+      </div>
+      <div class=" w-3/12 h-2/6 p-4  m-14 flex-grow text-center rounded-lg  bg-gray-400   shadow-lg">
+        <h1>div5
+        </h1>
+      </div>
+      <div class=" w-3/12 h-2/6 p-4  m-14 flex-grow text-center rounded-lg   bg-gray-400   shadow-lg">
+        <h1>div6
+        </h1>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+</body>
